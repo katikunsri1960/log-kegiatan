@@ -2,10 +2,8 @@
 @section('content')
 <div class="main-content app-content mt-0">
     <div class="side-app">
-
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
-
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
@@ -20,7 +18,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="row row-cards">
                 <div class="col-lg-12 col-xl-12">
 
@@ -121,10 +118,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-                </div><!-- COL-END -->
+                </div>
             </div>
         </div>
     </div>
