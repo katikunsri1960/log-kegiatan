@@ -24,7 +24,7 @@ Auth::routes([
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
 Route::group(['middleware' => ['admin']], function () {
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
 });
 
 

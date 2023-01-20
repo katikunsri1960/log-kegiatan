@@ -66,9 +66,7 @@
                                                     <button class="btn btn-danger badge" type="submit"><i
                                                         class="fa fa-trash text-white"></i></button>
                                                 </form>
-                                      
                                             </div>
-
                                         </td>
                                     </tr>
                                     @endforeach
