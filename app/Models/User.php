@@ -49,5 +49,17 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+    // has many project teams
+    public function projectTeams()
+    {
+        return $this->hasMany(ProjectTeam::class);
+    }
+
+    // has many projects through project teams
+    public function projects()
+    {
+        return $this->hasManyThrough(Project::class, ProjectTeam::class, 'user_id', 'id', 'id', 'project_id');
+    }
+
 
 }

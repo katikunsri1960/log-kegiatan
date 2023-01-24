@@ -14,17 +14,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes([
     'register' => false,
 ]);
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => ['auth']], function () {
 
-Route::group(['middleware' => ['admin']], function () {
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
+        Route::resource('projects', App\Http\Controllers\ProjectController::class);
+    });
+
+    Route::group(['middleware' => ['user']], function () {
+        Route::resource('my-projects', App\Http\Controllers\MyProjectController::class)->only(['index', 'show']);
+        Route::resource('project-task', App\Http\Controllers\ProjectTaskController::class);
+    });
 });
+
 
 

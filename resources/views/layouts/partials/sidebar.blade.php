@@ -24,9 +24,21 @@
                         active
                     @endif" data-bs-toggle="slide" href="{{route('dashboard')}}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                 </li>
+                @can('user')
+                <li class="slide">
+                    <a class="side-menu__item @if (request()->routeIs('my-projects.*'))
+                        active
+                    @endif" data-bs-toggle="slide" href="{{route('my-projects.index')}}"><i class="side-menu__icon icon icon-rocket"></i><span class="side-menu__label">My Projects</span></a>
+                </li>
+                @endcan
                 @can('admin')
                 <li class="sub-category">
                     <h3>Management</h3>
+                </li>
+                <li>
+                    <a class="side-menu__item @if (request()->routeIs('projects.*'))
+                        active
+                    @endif" href="{{route('projects.index')}}"><i class="side-menu__icon fa fa-slideshare"></i><span class="side-menu__label">Projects</span></a>
                 </li>
                 <li>
                     <a class="side-menu__item @if (request()->routeIs('users.*'))
@@ -34,6 +46,7 @@
                     @endif" href="{{route('users.index')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Users</span></a>
                 </li>
                 @endcan
+
 
                 <li class="sub-category">
                     <h3>Elements</h3>
