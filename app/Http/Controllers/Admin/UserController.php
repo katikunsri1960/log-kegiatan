@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Feeder\ProgramStudi as Prodi;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -18,6 +20,9 @@ class UserController extends Controller
     public function index()
     {
         // $this->authorize('admin');
+       
+
+        $prodi = Prodi::select('id_prodi', 'nama_program_studi', 'nama_jenjang_pendidikan')->get();
 
         $users = User::all();
         // dd($users);
