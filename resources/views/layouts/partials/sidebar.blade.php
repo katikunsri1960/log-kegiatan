@@ -34,29 +34,30 @@
                     @endif" href="{{route('users.index')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Users</span></a>
                 </li>
                 @endcan
-
+                @can(['univ'])
                 <li class="sub-category">
-                    <h3>Elements</h3>
+                    <h3>Neofeeder</h3>
                 </li>
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fe fe-database"></i><span class="side-menu__label">Components</span><i class="angle fa fa-angle-right"></i></a>
+                <li class="slide
+                @if (request()->routeIs('feeder-lulusan'))
+                    is-expanded
+                @endif
+                ">
+                    <a class="side-menu__item
+                    @if (request()->routeIs('feeder-lulusan'))
+                        active
+                    @endif" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fa fa-line-chart"></i><span class="side-menu__label">Monev</span><i class="angle fa fa-angle-right"></i></a>
                     <ul class="slide-menu">
-                        <li class="side-menu-label1"><a href="javascript:void(0)">Components</a></li>
-                        <li><a href="cards.html" class="slide-item"> Cards design</a></li>
-                        <li><a href="calendar.html" class="slide-item"> Default calendar</a></li>
-                        <li><a href="calendar2.html" class="slide-item"> Full calendar</a></li>
-                        <li><a href="chat.html" class="slide-item"> Default Chat</a></li>
-                        <li><a href="notify.html" class="slide-item"> Notifications</a></li>
-                        <li><a href="sweetalert.html" class="slide-item"> Sweet alerts</a></li>
-                        <li><a href="rangeslider.html" class="slide-item"> Range slider</a></li>
-                        <li><a href="scroll.html" class="slide-item"> Content Scroll bar</a></li>
-                        <li><a href="loaders.html" class="slide-item"> Loaders</a></li>
-                        <li><a href="counters.html" class="slide-item"> Counters</a></li>
-                        <li><a href="rating.html" class="slide-item"> Rating</a></li>
-                        <li><a href="timeline.html" class="slide-item"> Timeline</a></li>
-                        <li><a href="treeview.html" class="slide-item"> Treeview</a></li>
+                        <li class="side-menu-label1"><a href="javascript:void(0)">Monev</a></li>
+                        <li><a href="{{route('feeder-lulusan')}}" class="slide-item @if (request()->routeIs('feeder-lulusan'))
+                            active
+                        @endif"> Lulusan</a></li>
+                        <li><a href="#" class="slide-item"> Length Studi</a></li>
                     </ul>
                 </li>
+                @endcan
+
+
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i class="side-menu__icon fe fe-package"></i><span class="side-menu__label">Elements</span><i class="angle fa fa-angle-right"></i></a>
                     <ul class="slide-menu">

@@ -62,7 +62,7 @@
                                                 <input type="password" class="form-control @error('password')
                                                 is-invalid
                                             @enderror" name="password"
-                                                    placeholder="*************">
+                                                    placeholder="password">
                                                 @error('password')
                                                 <span class="invalid-feedback text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@
                                                 <input type="password" class="form-control @error('password_confirmation')
                                                 is-invalid
                                             @enderror" name="password_confirmation"
-                                                    placeholder="*************">
+                                                    placeholder="password">
                                                     @error('password_confirmation')
                                                 <span class="invalid-feedback text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -87,17 +87,49 @@
                                         <div class=" row mb-4 mb-0">
                                             <label class="col-md-3 form-label">Role User</label>
                                             <div class="col-md-9">
-                                                <select class="form-control select2 @error('role_id')
+                                                <select id="role_id" onchange="fakProdi()" class="form-control select2 @error('role_id')
                                                 is-invalid
                                             @enderror" name="role_id"
                                                     data-bs-placeholder="Choose One">
-                                                    <option label="Choose one"></option>
+                                                    <option label="Choose one"> Pilih Role</option>
                                                     @foreach ($roles as $role)
                                                     <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                                                     @endforeach
 
                                                 </select>
                                                 @error('role_id')
+                                                <span class="invalid-feedback text-danger" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4 mb-0" id="fakultas" hidden>
+                                            <label class="col-md-3 form-label">Fakultas</label>
+                                            <div class="col-md-9">
+                                                <select id="fakultas_id" class="form-control select2 @error('fakultas_id')
+                                                is-invalid
+                                            @enderror" name="fakultas_id"
+                                                    data-bs-placeholder="Choose One">
+                                                    <option label="Pilih fakultas">Pilih Fakultas</option>
+                                                </select>
+                                                @error('fakultas_id')
+                                                <span class="invalid-feedback text-danger" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4 mb-0" id="prodi" hidden>
+                                            <label class="col-md-3 form-label">Program Studi</label>
+                                            <div class="col-md-9">
+                                                <select id="prodi_id" class="form-control select2 @error('prodi_id')
+                                                is-invalid
+                                            @enderror" name="prodi_id"
+                                                    data-bs-placeholder="Choose One">
+                                                    <option label="Pilih prodi">Pilih prodi</option>
+                                                </select>
+                                                @error('prodi_id')
                                                 <span class="invalid-feedback text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -131,4 +163,70 @@
 <!-- SELECT2 JS -->
 <script src="{{asset('assets/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2.js')}}"></script>
+
+<script>
+
+
+    function fakProdi() {
+        var role_id = $('#role_id').val();
+        if (role_id == 3) {
+            //show fakultas
+            $('#fakultas').removeAttr('hidden');
+            $('#prodi').attr('hidden', true);
+
+            //ajax get fakultas and insert to select option
+            $.ajax({
+                url: "{{route('get-fakultas')}}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#fakultas_id').attr('required', true);
+                    $('#fakultas_id').html('');
+                    $('#prodi_id').html('');
+                    //make it required
+                    $('#fakultas_id').append('<option label="Pilih fakultas"></option>');
+                    $.each(data, function (key, value) {
+                        $('#fakultas_id').append('<option value="' + value.id + '">' + value.nama_fakultas +
+                            '</option>');
+                    });
+                }
+            });
+
+        } else if(role_id == 4) {
+            //hide fakultas
+            $('#fakultas').attr('hidden', true);
+            $('#prodi').removeAttr('hidden');
+
+            //ajax get prodi
+            $.ajax({
+                url: "{{route('get-prodi')}}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                        $('#prodi_id').attr('required', true);
+                        $('#prodi_id').html('');
+
+                        //remove all value in fakultas id
+                        $('#fakultas_id').html('');
+
+                        $('#prodi_id').append('<option label="Pilih prodi"></option>');
+                        $.each(data, function (key, value) {
+                            $('#prodi_id').append('<option value="' + value.id + '">'  + value.nama_jenjang_pendidikan + " - " + value.nama_program_studi +
+                                '</option>');
+                        });
+                }
+            });
+        } else {
+           //remove all fakultas and prodi
+            $('#fakultas_id').html('');
+            $('#prodi_id').html('');
+            $('#fakultas').attr('hidden', true);
+            $('#prodi').attr('hidden', true);
+
+
+        }
+    }
+
+</script>
+
 @endpush

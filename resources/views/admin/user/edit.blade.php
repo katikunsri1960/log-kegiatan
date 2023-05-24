@@ -104,6 +104,40 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="row mb-4 mb-0" id="fakultas" hidden>
+                                            <label class="col-md-3 form-label">Fakultas</label>
+                                            <div class="col-md-9">
+                                                <select id="fakultas_id" class="form-control select2 @error('fakultas_id')
+                                                is-invalid
+                                            @enderror" name="fakultas_id"
+                                                    data-bs-placeholder="Choose One">
+                                                    <option label="Pilih fakultas">Pilih Fakultas</option>
+                                                </select>
+                                                @error('fakultas_id')
+                                                <span class="invalid-feedback text-danger" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4 mb-0" id="prodi" @if ($user->role_id != 3)
+                                            hidden
+                                        @endif >
+                                            <label class="col-md-3 form-label">Program Studi</label>
+                                            <div class="col-md-9">
+                                                <select id="prodi_id" class="form-control select2 @error('prodi_id')
+                                                is-invalid
+                                            @enderror" name="prodi_id"
+                                                    data-bs-placeholder="Choose One">
+                                                    <option label="Pilih prodi">Pilih prodi</option>
+                                                </select>
+                                                @error('prodi_id')
+                                                <span class="invalid-feedback text-danger" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="form-footer mt-2 row">
                                             <div class="col-md-3"></div>
                                             <div class="col-md-9">
@@ -129,4 +163,58 @@
 <!-- SELECT2 JS -->
 <script src="{{asset('assets/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2.js')}}"></script>
+<script>
+
+
+    function fakProdi() {
+        var role_id = $('#role_id').val();
+        if (role_id == 3) {
+            //show fakultas
+            $('#fakultas').removeAttr('hidden');
+            $('#prodi').attr('hidden', true);
+
+            //ajax get fakultas and insert to select option
+            $.ajax({
+                url: "{{route('get-fakultas')}}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+
+                    $('#fakultas_id').html('');
+                    $('#fakultas_id').append('<option label="Pilih fakultas"></option>');
+                    $.each(data, function (key, value) {
+                        $('#fakultas_id').append('<option value="' + value.id + '">' + value.nama_fakultas +
+                            '</option>');
+                    });
+                }
+            });
+
+        } else if(role_id == 4) {
+            //hide fakultas
+            $('#fakultas').attr('hidden', true);
+            $('#prodi').removeAttr('hidden');
+
+            //ajax get prodi
+            $.ajax({
+                url: "{{route('get-prodi')}}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // add selected
+                    $('#prodi_id').html('');
+                    $('#prodi_id').append('<option label="Pilih prodi"></option>');
+                    $.each(data, function (key, value) {
+                        $('#prodi_id').append('<option value="' + value.id + '">' + value.nama_program_studi +
+                            '</option>');
+                    });
+
+                }
+            });
+        } else {
+            $('#fakultas').attr('hidden', true);
+            $('#prodi').attr('hidden', true);
+        }
+    }
+
+</script>
 @endpush

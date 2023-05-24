@@ -5,12 +5,13 @@ namespace App\Models\Feeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProgramStudi extends Model
+class ListMahasiswa extends Model
 {
     use HasFactory;
-
     protected $connection = 'pd_con';
-    protected $table = 'program_studi';
 
-
+    protected $table = 'list_mahasiswa';
+    protected $primaryKey = null;
+    public $timeStamps = false;
+    public $incrementing = false;
 }

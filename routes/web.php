@@ -25,6 +25,12 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 
 Route::group(['middleware' => ['admin']], function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
+    Route::get('get-prodi', [App\Http\Controllers\Admin\UserController::class, 'getProdi'])->name('get-prodi');
+    Route::get('get-fakultas', [App\Http\Controllers\Admin\UserController::class, 'getFakultas'])->name('get-fakultas');
+});
+
+Route::group(['middleware' => ['univ']], function() {
+    Route::get('feeder-lulusan', [App\Http\Controllers\FeederController::class, 'lulusan'])->name('feeder-lulusan');
 });
 
 

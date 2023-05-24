@@ -49,5 +49,27 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id')
+            ->withPivot('fakprod_id');
+    }
+
+    public function fakprodi()
+    {
+        //check if user has role fakultas
+        if ($this->role->id == 3) {
+            //hasone through fakultas through role_users
+            return $this->hasOneThrough(Fakultas::class, RoleUser::class, 'user_id', 'id', 'id', 'fakprod_id');
+        }
+
+        //check if user has role prodi
+        if ($this->role->id == 4) {
+            //hasone through program_studi through role_users
+            return $this->hasOneThrough(ProgramStudi::class, RoleUser::class, 'user_id', 'id', 'id', 'fakprod_id');
+        }
+
+    }
+
 
 }

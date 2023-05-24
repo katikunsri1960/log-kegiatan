@@ -50,7 +50,13 @@
                                         <td class="text-center align-middle">{{$user->name}}</td>
                                         <td class="text-center align-middle">{{$user->email}}</td>
                                         <td class="text-center align-middle">
-                                            <span class="badge bg-primary">{{ucfirst($user->role->name)}}</span>
+                                            <span class="badge bg-primary">{{ucfirst($user->role->name)}}
+                                            @if ($user->role->id == 4)
+                                                {{$user->fakprodi->nama_jenjang_pendidikan}} - {{$user->fakprodi->nama_program_studi}}
+                                            @elseif($user->role->id == 3)
+                                                {{ucfirst($user->fakprodi->nama_fakultas)}}
+                                            @endif
+                                            </span>
 
                                         </td>
                                         <td class="text-center">
